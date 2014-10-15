@@ -10,7 +10,7 @@ declare class URI {
  *
  * https://github.com/widgetworks/parseuri
  */
-declare interface IUriDescriptor {
+interface IUriDescriptor {
     anchor: string;
     query: string;
     file: string;
