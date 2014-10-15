@@ -37,6 +37,9 @@ Example output of the UriDescriptor based on this test URL:
 UriDescriptor:
 
 ```javascript
+parseUri('https://s3-ap-southeast-2.amazonaws.com/w-widgetworks-com-au/wiwo/wiwo-startupcosts/1.0.5/index.html?hostUrl=https%3A%2F%2Fwm.widgetworks.com.au%2Fwidget%2Fbuyome%2Fqa&configUrl=https%3A%2F%2Fw.widgetworks.com.au%2Fc%2Fbuyome%2Fqa&frameId=wiwo-buyome#/results/show');
+
+// Returns:
 {
 		"anchor": "/results/show",
 		"query": "hostUrl=https%3A%2F%2Fwm.widgetworks.com.au%2Fwidget%2Fbuyome%2Fqa&configUrl=https%3A%2F%2Fw.widgetworks.com.au%2Fc%2Fbuyome%2Fqa&frameId=wiwo-buyome",
