@@ -3,7 +3,8 @@ parseuri
 
 A fork of Steven Levithan's parseuri (v1.2.2).
 
-Adds methods to reconstruct the URI based on the parsed URI object.
+Based on holywarez's fork (https://github.com/holywarez/parseuri) which adds methods to reconstruct the URI based on the parsed URI object.
+
 
 __Dependencies:__
 
