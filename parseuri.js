@@ -2,14 +2,14 @@
 // (c) Steven Levithan <stevenlevithan.com>
 // MIT License
 //
-// Upgraded by Anatoly Lapshin
+// Upgraded by Anatoly Lapshin (https://github.com/holywarez/parseuri)
 
 (function() {
 
-    Array.prototype.contains = function(obj) {
-        var i = this.length;
+    function contains(list, obj) {
+        var i = list.length;
         while (i--) {
-            if (this[i] === obj) {
+            if (list[i] === obj) {
                 return true;
             }
         }
@@ -44,33 +44,33 @@
             var result = "";
             var original = "";
             if (this.protocol) {
-                if (!except.contains('protocol')) result += this.protocol + "://";
+                if (!contains(except, 'protocol')) result += this.protocol + "://";
                 original += this.protocol + "://";
                 if (this.user) {
-                    if (!except.contains('userInfo')) result += this.user;
+                    if (!contains(except, 'userInfo')) result += this.user;
                     original += this.user;
                     if (this.password) {
-                        if (!except.contains('userInfo')) result += ":" + this.password;
+                        if (!contains(except, 'userInfo')) result += ":" + this.password;
                         original += ":" + this.password;
                     }
 
-                    if (!except.contains('userInfo')) result += "@";
+                    if (!contains(except, 'userInfo')) result += "@";
                     original += "@";
                 }
 
                 if (this.host) {
-                    if (!except.contains('host')) result += this.host;
+                    if (!contains(except, 'host')) result += this.host;
                     original += this.host;
                 }
 
                 if (this.port) {
-                    if (!except.contains('port'))  result += ":" + this.port;
+                    if (!contains(except, 'port'))  result += ":" + this.port;
                     original += ":" + this.port;
                 }
             }
 
             if (this.path) {
-                if (!except.contains('path')) result += this.path;
+                if (!contains(except, 'path')) result += this.path;
                 original += this.path;
             }
 
@@ -86,13 +86,13 @@
                 }
 
                 if (queryString.length > 0) {
-                    if (!except.contains('queryKey')) result += "?" + queryString;
+                    if (!contains(except, 'queryKey')) result += "?" + queryString;
                     original += "?" + queryString;
                 }
             }
 
             if (this.anchor) {
-                if (!except.contains('anchor')) result += "#" + this.anchor;
+                if (!contains(except, 'anchor')) result += "#" + this.anchor;
                 original += "#" + this.anchor;
             }
 
