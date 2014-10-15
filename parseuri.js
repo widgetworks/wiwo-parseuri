@@ -14,7 +14,17 @@
             }
         }
         return false;
-    };
+    }
+    
+    function extend(dest, src) {
+        // Non-recursive copy from src to dest.
+        for (var i in src){
+            if (src.hasOwnProperty(i)){
+                dest[i] = src[i];
+            }
+        }
+        return dest;
+    }
 
     var URI = window.URI = {};
 
@@ -96,7 +106,7 @@
                 original += "#" + this.anchor;
             }
 
-            jQuery.extend(this, URI.parse(original));
+            extend(this, URI.parse(original));
 
             return result;
         }
@@ -116,7 +126,7 @@
             if ($1) uri[o.q.name][$1] = $2;
         });
 
-        return jQuery.extend(uri, extensionPack);
+        return extend(uri, extensionPack);
     };
 
 
