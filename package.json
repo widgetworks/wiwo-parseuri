@@ -1,0 +1,9 @@
+{
+  "name": "parseuri",
+  "version": "1.2.2-wiwo.1",
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com:widgetworks/parseuri.git"
+  },
+  "main": "parseuri.js"
+}
