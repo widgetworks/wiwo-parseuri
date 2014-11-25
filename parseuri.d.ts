@@ -30,5 +30,16 @@ interface IUriDescriptor {
     toAbsolute(pattern: IUriDescriptor): string;
     isAbsolute(): boolean;
     isRelative(): boolean;
+    toUriString(except: string[]): string;
+    
+    /**
+     * Return a string representation of 
+     * the URI excluding any properties
+     * passed in the `except` array.
+     * 
+     * @param  {string[]} except [description]
+     * @return {string}          [description]
+     * @deprecated Use `toUriString(...)` for IE8 support.
+     */
     toString(except: string[]): string;
 }

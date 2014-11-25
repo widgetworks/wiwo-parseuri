@@ -38,7 +38,7 @@
             this.protocol = pattern.protocol;
             this.user = pattern.user;
             this.password = pattern.password;
-            return this.toString();
+            return this.toUriString();
         },
 
         isAbsolute: function() {
@@ -48,8 +48,12 @@
         isRelative: function() {
             return !this.host;
         },
-
+        
         toString: function(except) {
+            return this.toUriString(except);
+        },
+        
+        toUriString: function(except) {
             var except = except || [];
             var result = "";
             var original = "";
