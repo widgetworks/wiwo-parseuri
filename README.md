@@ -92,7 +92,7 @@ The returned `Uridescriptor` instance has these methods available:
 	 * 
 	 * __Note:__ The URL string is reparsed so the values on the UriDescriptor might change.
 	 */
-	toString(except: string[]): string;
+	toUriString(except: string[]): string;
 }
 
 ```
