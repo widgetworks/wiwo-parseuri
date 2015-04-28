@@ -50,6 +50,59 @@
             return !this.host;
         },
         
+        /**
+         * Set the protocol for this instance if it
+         * hasn't already been set.
+         * 
+         * For protocol-relative URIs ('//example.com') this
+         * will set the protocol from the given `uri` parameter.
+         * 
+         * @param  {Uri} uri - An absolute Uri object that has a `protocol` value.
+         * @return {Uri} Returns this instance for chaining
+         */
+        normalizeProtocol: function(uri){
+            if (uri.isAbsolute()){
+                this.protocol = this.protocol || uri.protocol;
+            }
+            return this;
+        },
+        
+        /**
+         * Return the origin of this URI or
+         * null if it is a relative URI.
+         * 
+         * This should match the style of `window.location.origin`
+         * as closely as possible and return:
+         * 
+         *     'protocol://host:port'
+         * 
+         * If protocol or port are not set then they will be excluded:
+         * 
+         *     '//host'
+         *     '//host:80'
+         *     'https://host'
+         * 
+         * NOTE: We don't handle `user` or `password` properties.
+         * 
+         * @return {[type]} [description]
+         */
+        origin: function(){
+            // Start with `host`.
+            var origin = '//'+ this.host;
+            
+            if (this.protocol){
+                // Add `protocol`.
+                origin = this.protocol + ':' + origin;
+            }
+            
+            if (this.port){
+                // Add `port`.
+                origin = origin + ':' + this.port;
+            }
+            
+            return origin;
+        }
+        
         toString: function(except) {
             return this.toUriString(except);
         },
@@ -118,12 +171,12 @@
     };
 
 
-    URI.parse = function (str, useStrict) {
-        if (typeof useStrict === 'undefined'){
-            useStrict = URI.options.strictMode;
+    URI.parse = function (str, strictMode) {
+        if (typeof strictMode === 'undefined'){
+            strictMode = URI.options.strictMode;
         }
         var o = URI.options,
-                m = o.parser[useStrict ? "strict" : "loose"].exec(str),
+                m = o.parser[strictMode ? "strict" : "loose"].exec(str),
                 uri = {},
                 i = 14;
 

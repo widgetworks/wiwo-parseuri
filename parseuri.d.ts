@@ -1,7 +1,7 @@
 declare class URI {
-    static parse(url:string, useStrict?:boolean): IUriDescriptor;
+    static parse(url:string, strictMode?:boolean): IUriDescriptor;
     static options: {
-        strict: boolean;
+        strictMode: boolean;
     };
 }
 
@@ -31,6 +31,9 @@ interface IUriDescriptor {
     isAbsolute(): boolean;
     isRelative(): boolean;
     toUriString(except: string[]): string;
+    
+    normalizeProtocol(uri: IUriDescriptor): IUriDescriptor;
+    origin(): string;
     
     /**
      * Return a string representation of 
