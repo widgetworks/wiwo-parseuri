@@ -1,6 +1,7 @@
 // parseUri 1.2.2
 // (c) Steven Levithan <stevenlevithan.com>
 // MIT License
+// http://blog.stevenlevithan.com/archives/parseuri
 //
 // Upgraded by Anatoly Lapshin (https://github.com/holywarez/parseuri)
 
@@ -117,9 +118,12 @@
     };
 
 
-    URI.parse = function (str) {
+    URI.parse = function (str, useStrict) {
+        if (typeof useStrict === 'undefined'){
+            useStrict = URI.options.strictMode;
+        }
         var o = URI.options,
-                m = o.parser[o.strictMode ? "strict" : "loose"].exec(str),
+                m = o.parser[useStrict ? "strict" : "loose"].exec(str),
                 uri = {},
                 i = 14;
 
@@ -135,7 +139,7 @@
 
 
     URI.options = {
-        strictMode: false,
+        strictMode: true,
         key: ["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],
         q:   {
             name:   "queryKey",

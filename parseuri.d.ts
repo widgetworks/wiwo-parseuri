@@ -1,5 +1,5 @@
 declare class URI {
-    static parse(url:string): IUriDescriptor;
+    static parse(url:string, useStrict?:boolean): IUriDescriptor;
     static options: {
         strict: boolean;
     };
