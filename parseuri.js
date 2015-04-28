@@ -101,7 +101,7 @@
             }
             
             return origin;
-        }
+        },
         
         toString: function(except) {
             return this.toUriString(except);
