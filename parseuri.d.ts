@@ -1,48 +1,44 @@
-declare class URI {
-    static parse(url:string, strictMode?:boolean): IUriDescriptor;
-    static options: {
-        strictMode: boolean;
-    };
+export declare type IUriDescriptor = IUriProps & IUriMethods;
+export interface IUriProps {
+    "anchor": string;
+    "query": string;
+    "file": string;
+    "directory": string;
+    "path": string;
+    "relative": string;
+    "port": string;
+    "host": string;
+    "password": string;
+    "user": string;
+    "userInfo": string;
+    "authority": string;
+    "protocol": string;
+    "source": string;
+    "queryKey": Record<string, string>;
 }
-
-/**
- * Result from URI.parse
- *
- * https://github.com/widgetworks/parseuri
- */
-interface IUriDescriptor {
-    anchor: string;
-    query: string;
-    file: string;
-    directory: string;
-    path: string;
-    relative: string;
-    port: string;
-    host: string;
-    password: string;
-    user: string;
-    userInfo: string;
-    authority: string;
-    protocol: string;
-    source: string;
-    queryKey: any; //map of strings, keys are query string keys
-
-    toAbsolute(pattern: IUriDescriptor): string;
+export declare type IExceptProps = keyof IUriProps;
+export interface IUriMethods {
+    toAbsolute(pattern: IUriDescriptor): string | undefined;
+    normalizeProtocol(uri: IUriDescriptor): this;
     isAbsolute(): boolean;
     isRelative(): boolean;
-    toUriString(except: string[]): string;
-    
-    normalizeProtocol(uri: IUriDescriptor): IUriDescriptor;
     origin(): string;
-    
-    /**
-     * Return a string representation of 
-     * the URI excluding any properties
-     * passed in the `except` array.
-     * 
-     * @param  {string[]} except [description]
-     * @return {string}          [description]
-     * @deprecated Use `toUriString(...)` for IE8 support.
-     */
-    toString(except: string[]): string;
+    toString(except?: IExceptProps[]): string;
+    toUriString(except?: IExceptProps[]): string;
 }
+export declare var URI: {
+    options: {
+        strictMode: boolean;
+        key: string[];
+        q: {
+            name: string;
+            parser: RegExp;
+        };
+        parser: {
+            strict: RegExp;
+            loose: RegExp;
+        };
+    };
+    parse: (str: string, strictMode?: boolean) => IUriDescriptor;
+};
+export default URI;
