@@ -1,4 +1,4 @@
-parseuri
+wiwo-parseuri
 ========
 
 A fork of Steven Levithan's parseuri (v1.2.2).
@@ -11,8 +11,8 @@ Based on holywarez's fork (https://github.com/holywarez/parseuri) which adds met
 ES module:
 
 ```javascript
-import URI from '@wiwo/parseuri';
-import {IUriDescriptor} from '@wiwo/parseuri';
+import URI from 'wiwo-parseuri';
+import {IUriDescriptor} from 'wiwo-parseuri';
 
 URI: {
     parse: function(str): IUriDescriptor {
