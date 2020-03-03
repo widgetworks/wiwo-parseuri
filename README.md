@@ -8,11 +8,14 @@ Based on holywarez's fork (https://github.com/holywarez/parseuri) which adds met
 
 # Implementaion
 
-Exposes the `window.URI` object:
+ES module:
 
 ```javascript
-window.URI = {
-    parse: function(str): UriDescriptor{
+import URI from '@wiwo/parseuri';
+import {IUriDescriptor} from '@wiwo/parseuri';
+
+URI: {
+    parse: function(str): IUriDescriptor {
         // Parse the string and return a URI descriptor object.
     },
     options: {
@@ -27,12 +30,12 @@ window.URI = {
 
 Example output of the UriDescriptor based on this test URL:
 
-`https://s3-ap-southeast-2.amazonaws.com/w-widgetworks-com-au/wiwo/wiwo-startupcosts/1.0.5/index.html?hostUrl=https%3A%2F%2Fwm.widgetworks.com.au%2Fwidget%2Fbuyome%2Fqa&configUrl=https%3A%2F%2Fw.widgetworks.com.au%2Fc%2Fbuyome%2Fqa&frameId=wiwo-buyome#/results/show`
+`https://example-url.example.com/w-widgetworks-com-au/wiwo/wiwo-startupcosts/1.0.5/index.html?hostUrl=https%3A%2F%2Fwm.widgetworks.com.au%2Fwidget%2Fbuyome%2Fqa&configUrl=https%3A%2F%2Fw.widgetworks.com.au%2Fc%2Fbuyome%2Fqa&frameId=wiwo-buyome#/results/show`
 
 UriDescriptor:
 
 ```javascript
-window.URI.parse('https://s3-ap-southeast-2.amazonaws.com/w-widgetworks-com-au/wiwo/wiwo-startupcosts/1.0.5/index.html?hostUrl=https%3A%2F%2Fwm.widgetworks.com.au%2Fwidget%2Fbuyome%2Fqa&configUrl=https%3A%2F%2Fw.widgetworks.com.au%2Fc%2Fbuyome%2Fqa&frameId=wiwo-buyome#/results/show');
+window.URI.parse('https://example-url.example.com/w-widgetworks-com-au/wiwo/wiwo-startupcosts/1.0.5/index.html?hostUrl=https%3A%2F%2Fwm.widgetworks.com.au%2Fwidget%2Fbuyome%2Fqa&configUrl=https%3A%2F%2Fw.widgetworks.com.au%2Fc%2Fbuyome%2Fqa&frameId=wiwo-buyome#/results/show');
 
 // Returns:
 {
@@ -43,13 +46,13 @@ window.URI.parse('https://s3-ap-southeast-2.amazonaws.com/w-widgetworks-com-au/w
 		"path": "/w-widgetworks-com-au/wiwo/wiwo-startupcosts/1.0.5/index.html",
 		"relative": "/w-widgetworks-com-au/wiwo/wiwo-startupcosts/1.0.5/index.html?hostUrl=https%3A%2F%2Fwm.widgetworks.com.au%2Fwidget%2Fbuyome%2Fqa&configUrl=https%3A%2F%2Fw.widgetworks.com.au%2Fc%2Fbuyome%2Fqa&frameId=wiwo-buyome#/results/show",
 		"port": "",
-		"host": "s3-ap-southeast-2.amazonaws.com",
+		"host": "example-url.example.com",
 		"password": "",
 		"user": "",
 		"userInfo": "",
-		"authority": "s3-ap-southeast-2.amazonaws.com",
+		"authority": "example-url.example.com",
 		"protocol": "https",
-		"source": "https://s3-ap-southeast-2.amazonaws.com/w-widgetworks-com-au/wiwo/wiwo-startupcosts/1.0.5/index.html?hostUrl=https%3A%2F%2Fwm.widgetworks.com.au%2Fwidget%2Fbuyome%2Fqa&configUrl=https%3A%2F%2Fw.widgetworks.com.au%2Fc%2Fbuyome%2Fqa&frameId=wiwo-buyome#/results/show",
+		"source": "https://example-url.example.com/w-widgetworks-com-au/wiwo/wiwo-startupcosts/1.0.5/index.html?hostUrl=https%3A%2F%2Fwm.widgetworks.com.au%2Fwidget%2Fbuyome%2Fqa&configUrl=https%3A%2F%2Fw.widgetworks.com.au%2Fc%2Fbuyome%2Fqa&frameId=wiwo-buyome#/results/show",
 		"queryKey": {
 				"hostUrl": "https%3A%2F%2Fwm.widgetworks.com.au%2Fwidget%2Fbuyome%2Fqa",
 				"configUrl": "https%3A%2F%2Fw.widgetworks.com.au%2Fc%2Fbuyome%2Fqa",
@@ -74,7 +77,7 @@ The returned `Uridescriptor` instance has these methods available:
 	 * 
 	 * __Note:__ The UriDescriptor will be updated with the new absolute values.
 	 */
-	toAbsolute(pattern: UriDescriptor): string;
+	toAbsolute(pattern: IUriDescriptor): string;
 
 	/**
 	 * Return true if the UriDescriptor has a valid host property.

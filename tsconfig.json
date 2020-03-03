@@ -1,11 +1,16 @@
 {
     "compilerOptions": {
+        "esModuleInterop": true,
         "moduleResolution": "node",
         "baseUrl": ".",
+        "rootDir": ".",
         "sourceMap": true,
         "inlineSources": true,
         "declaration": true,
         "module": "esnext",
         "target": "es5"
-    }
+    },
+    "files": [
+        "parseuri.ts"
+    ]
 }

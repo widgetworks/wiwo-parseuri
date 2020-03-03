@@ -6,7 +6,7 @@
 // Upgraded by Anatoly Lapshin (https://github.com/holywarez/parseuri)
 
 
-export type IUri = IUriProps & IUriMethods;
+export type IUriDescriptor = IUriProps & IUriMethods;
 
 
 export interface IUriProps {
@@ -30,13 +30,13 @@ export interface IUriProps {
 export type IExceptProps = keyof IUriProps;
 
 export interface IUriMethods {
-    toAbsolute(pattern: IUri): string | undefined
+    // NOTE: Mutates source UriDescriptor
+    toAbsolute(pattern: IUriDescriptor): string | undefined
+    normalizeProtocol(uri: IUriDescriptor): this
     
     isAbsolute(): boolean
     isRelative(): boolean
     origin(): string
-    
-    normalizeProtocol(uri: IUri): this
     
     toString(except?: IExceptProps[]): string
     toUriString(except?: IExceptProps[]): string
@@ -63,7 +63,41 @@ function extend(dest, src) {
     return dest;
 }
 
-const extensionPack: IUriMethods = {
+export var URI = {
+    options: {
+        strictMode: true,
+        key: ["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],
+        q:   {
+            name:   "queryKey",
+            parser: /(?:^|&)([^&=]*)=?([^&]*)/g
+        },
+        parser: {
+            strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
+            loose:  /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/
+        }
+    },
+    
+    parse: function (str: string, strictMode?: boolean): IUriDescriptor {
+        if (typeof strictMode === 'undefined'){
+            strictMode = URI.options.strictMode;
+        }
+        var o = URI.options;
+        var m = o.parser[strictMode ? "strict" : "loose"].exec(str);
+        var uri: IUriDescriptor = {} as any;
+        var i = 14;
+    
+        while (i--) uri[o.key[i]] = m[i] || "";
+    
+        uri[o.q.name] = {};
+        uri[o.key[12]].replace(o.q.parser, function ($0, $1, $2) {
+            if ($1) uri[o.q.name][$1] = $2;
+        });
+    
+        return extend(uri, extensionPack);
+    },
+};
+
+var extensionPack = {
 
     toAbsolute: function(pattern) {
         if (pattern.isRelative()) return;
@@ -205,41 +239,4 @@ const extensionPack: IUriMethods = {
 };
 
 
-export class URI {
-
-    static options = {
-        strictMode: true,
-        key: ["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],
-        q:   {
-            name:   "queryKey",
-            parser: /(?:^|&)([^&=]*)=?([^&]*)/g
-        },
-        parser: {
-            strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
-            loose:  /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/
-        }
-    };
-    
-    
-    static parse(str: string, strictMode?: boolean) {
-        if (typeof strictMode === 'undefined'){
-            strictMode = URI.options.strictMode;
-        }
-        let o = URI.options;
-        let m = o.parser[strictMode ? "strict" : "loose"].exec(str);
-        let uri = {};
-        let i = 14;
-
-        while (i--) uri[o.key[i]] = m[i] || "";
-
-        uri[o.q.name] = {};
-        uri[o.key[12]].replace(o.q.parser, function ($0, $1, $2) {
-            if ($1) uri[o.q.name][$1] = $2;
-        });
-
-        return extend(uri, extensionPack);
-    }
-    
-}
-
-export default URI; 
+export default URI;
