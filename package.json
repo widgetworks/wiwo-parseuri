@@ -1,9 +1,20 @@
 {
-  "name": "parseuri",
-  "version": "1.2.2-wiwo.7-SNAPSHOT",
+  "name": "@wiwo/parseuri",
+  "version": "2.0.0",
   "repository": {
     "type": "git",
     "url": "ssh://git@github.com:widgetworks/parseuri.git"
   },
-  "main": "parseuri.js"
+  "main": "parseuri.js",
+  "typings": "parseuri.d.ts",
+  "scripts": {
+    "build": "tsc parseuri.ts",
+    "release": "np --no-yarn --yolo"
+  },
+  "dependencies": {
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {
+    "np": "^6.2.0"
+  }
 }
